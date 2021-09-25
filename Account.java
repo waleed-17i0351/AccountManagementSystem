@@ -3,7 +3,7 @@ public class Account {
 	String ph, name, address, type, dateCreated;
 	
 	Account(){
-		id = 0000;
+		id = 0000; 
 		balance = 0;
 		ph = null;
 		name = null;
@@ -12,11 +12,22 @@ public class Account {
 		dateCreated = null;
 	}
 	
-	public void makeDeposit(int money){
-		this.balance += money;
+	Account(int id, int bal, String p, String n, String a, String t, String dc){
+		this.id = id; 
+		balance = bal;
+		ph = p;
+		name = n;
+		address = a;
+		type = t;
+		dateCreated = dc;
 	}
 	
-	public void makeWithdrawal(int money) {
+	public int makeDeposit(int money){
+		this.balance += money;
+		return this.balance;
+	}
+	
+	public int makeWithdrawal(int money) {
 		if (this.type == "s"){
 			if (this.balance - money < 0) {
 				System.out.println("Not enough money.");
@@ -34,6 +45,7 @@ public class Account {
 				this.balance -= money;
 			}
 		}
+		return this.balance;
 	}
 	public void checkBalance() {
 		System.out.println("Name:    " + this.name);
@@ -45,9 +57,11 @@ public class Account {
 	public void transferAmount(Account sender, Account receiver, int money) {
 		if ((sender.type == "s") && (sender.balance - money > 0)) {
 			receiver.balance += money;
+			sender.balance -= money;
 		}
 		else if ((sender.type == "c") && (sender.balance - money > -5000)) {
 			receiver.balance += money;
+			sender.balance -= money;
 		}
 		
 	}
